@@ -73,8 +73,8 @@ export const UploadStep = ({ onFileUpload, onPrevious, isProcessing }: UploadSte
           <li>Your CV</li>
           <li>Motivational letter</li>
           <li>Latest academic transcript</li>
-          <li>Names and contact details of two referees</li>
-          <li>Reference letter from a Warden/Residence Manager</li>
+          <li>Reference letter from a person who can attest to your student leadership role</li>
+          <li></li>
         </ul>
       </div>
       
@@ -107,7 +107,7 @@ export const UploadStep = ({ onFileUpload, onPrevious, isProcessing }: UploadSte
           <ul className="list-disc pl-5 mt-1 space-y-1">
             <li>Ensure all documents are combined into a single PDF file</li>
             <li>Name your file: <span className="font-mono">SURNAME_Initials_Roscommon_SubWarden.pdf</span></li>
-            <li>Applications close: Wednesday, 3 September 2025 at 23:00</li>
+            
           </ul>
         </div>
         

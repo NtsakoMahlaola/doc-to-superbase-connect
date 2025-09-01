@@ -96,7 +96,7 @@ export default function AdminDashboard() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
+                  <TableHead>Student Number</TableHead>
                   <TableHead>Position</TableHead>
                   <TableHead>Storage</TableHead>
                   <TableHead>Date</TableHead>
@@ -107,7 +107,7 @@ export default function AdminDashboard() {
                 {allApplications.map((app, index) => (
                   <TableRow key={app.id || index}>
                     <TableCell>{app.Name || app.name}</TableCell>
-                    <TableCell>{app.Email || app.email}</TableCell>
+                    <TableCell>{app['Student Number'] || app.studentNumber || 'N/A'}</TableCell>
                     <TableCell>{app['Position Applied For'] || app.position_applied_for || 'N/A'}</TableCell>
                     <TableCell>
                       <Badge variant={applications.includes(app) ? "default" : "secondary"}>

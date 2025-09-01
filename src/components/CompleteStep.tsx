@@ -60,7 +60,7 @@ export const CompleteStep = ({ extractedData, onSubmit, onPrevious, isProcessing
             <li>Motivational letter</li>
             <li>Latest academic transcript</li>
             <li>Names and contact details of two referees</li>
-            <li>Reference letter from a Warden/Residence Manager</li>
+            <li>Reference letter from a person who can attest to your student leadership role</li>
           </ul>
         </div>
       </div>
@@ -148,7 +148,7 @@ export const CompleteStep = ({ extractedData, onSubmit, onPrevious, isProcessing
             )}
           </Button>
           <p className="text-xs text-muted-foreground text-center mt-4">
-            Applications close: Wednesday, 3 September 2025 at 23:00
+            Applications closing date to be confirmed in email communication.
           </p>
           
           {!isFormValid && !isProcessing && (

@@ -18,7 +18,7 @@ export const SuccessStep = () => {
         
         <p className="text-lg text-muted-foreground mb-8">
           Thank you for your interest in the Roscommon Sub-Warden position. We've received your application and will review it carefully. 
-          Shortlisted candidates will be contacted for interviews by <span className="font-semibold text-foreground">15 September 2025</span>.
+          Onlly shortlisted candidates will be contacted.
         </p>
         
         {/* What Happens Next */}
@@ -44,13 +44,7 @@ export const SuccessStep = () => {
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 font-semibold">
-                3
-              </div>
-              <div>
-                <h4 className="font-medium text-blue-900">Final Selection</h4>
-                <p className="text-sm text-blue-700">Successful candidates will be notified by email by the end of September 2025.</p>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -76,8 +70,8 @@ export const SuccessStep = () => {
         <div className="mt-8 pt-6 border-t border-muted">
           <p className="text-sm text-muted-foreground">
             Have questions? Contact our HR team at{' '}
-            <a href="mailto:hr@company.com" className="text-primary hover:underline">
-              hr@company.com
+            <a href="mhlnts026@myuct.ac.za" className="text-primary hover:underline">
+              mhlnts026@myuct.ac.za
             </a>
           </p>
         </div>
