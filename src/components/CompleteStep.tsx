@@ -9,7 +9,7 @@ import { Loader2 } from 'lucide-react';
 
 interface CompleteStepProps {
   extractedData: ExtractedData;
-  onSubmit: (data: Partial<ApplicationData>) => void;
+  onSubmit: (data: ApplicationData) => void;
   onPrevious: () => void;
   isProcessing: boolean;
   applicationInfo?: ApplicationInfo | null;

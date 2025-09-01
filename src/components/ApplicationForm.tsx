@@ -26,9 +26,10 @@ export interface ApplicationData extends ExtractedData {
   position_applied_for: string;
   why_interested: string;
   terms_accepted: boolean;
+  applicationType?: string;
 }
 
-interface ApplicationInfo {
+export interface ApplicationInfo {
   name: string;
   surname: string;
   studentNumber: string;
@@ -195,34 +196,45 @@ export const ApplicationForm = () => {
     }
 
     setIsProcessing(true);
+    
     try {
+      // Import Airtable function dynamically to avoid issues
+      const { saveApplicationToAirtable } = await import('@/lib/airtable');
+      
       const fullName = `${applicationInfo?.name || ''} ${applicationInfo?.surname || ''}`.trim();
       
-      // Prepare form data
-      const formData = new FormData();
-      formData.append('name', fullName || data.full_name || 'Applicant');
-      formData.append('email', data.email || 'no-email@example.com');
-      formData.append('studentNumber', applicationInfo?.studentNumber || '');
-      formData.append('phone', data.phone || '');
-      formData.append('position_applied_for', data.position_applied_for || 'Not specified');
-      formData.append('leadership', JSON.stringify([
-        ...(data.leadership || []),
-        ...(applicationInfo?.leadershipRoles || []),
-        ...(applicationInfo?.otherRole ? [applicationInfo.otherRole] : [])
-      ]));
-      formData.append('education', JSON.stringify(data.education || []));
-      formData.append('why_interested', data.why_interested || 'Not provided');
-      formData.append('file', uploadedFile);
-
-      // Save to database
-      const response = await fetch('/api/submit-application', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit application');
-      }
+      // Prepare application data for Airtable
+      const applicationData = {
+        name: fullName || data.full_name || 'Applicant',
+        email: data.email || 'no-email@example.com',
+        studentNumber: applicationInfo?.studentNumber || '',
+        phone: data.phone || '',
+        position_applied_for: data.position_applied_for || 'Not specified',
+        leadership: [
+          ...(data.leadership || []),
+          ...(applicationInfo?.leadershipRoles || []),
+          ...(applicationInfo?.otherRole ? [applicationInfo.otherRole] : [])
+        ],
+        education: data.education || [],
+        why_interested: data.why_interested || 'Not provided',
+        file_name: uploadedFile.name || '',
+        created_at: new Date().toISOString()
+      };
+      
+      // Save to Airtable
+      const result = await saveApplicationToAirtable(applicationData);
+      console.log('Application submitted successfully to Airtable:', result);
+      
+      // Save to localStorage as backup
+      const backupData = {
+        ...applicationData,
+        submittedAt: new Date().toISOString(),
+        id: result.id
+      };
+      
+      const existingApplications = JSON.parse(localStorage.getItem('applications') || '[]');
+      existingApplications.push(backupData);
+      localStorage.setItem('applications', JSON.stringify(existingApplications));
       
       setApplicationSubmitted(true);
       setCurrentStep(3);
@@ -234,11 +246,39 @@ export const ApplicationForm = () => {
       
     } catch (error) {
       console.error('Error submitting application:', error);
+      
+      // Fallback: save to localStorage only
+      const fullName = `${applicationInfo?.name || ''} ${applicationInfo?.surname || ''}`.trim();
+      const fallbackData = {
+        name: fullName || data.full_name || 'Applicant',
+        email: data.email || 'no-email@example.com',
+        studentNumber: applicationInfo?.studentNumber || '',
+        phone: data.phone || '',
+        position_applied_for: data.position_applied_for || 'Not specified',
+        leadership: [
+          ...(data.leadership || []),
+          ...(applicationInfo?.leadershipRoles || []),
+          ...(applicationInfo?.otherRole ? [applicationInfo.otherRole] : [])
+        ],
+        education: data.education || [],
+        why_interested: data.why_interested || 'Not provided',
+        file_name: uploadedFile.name || '',
+        submittedAt: new Date().toISOString(),
+        id: Date.now().toString()
+      };
+      
+      const existingApplications = JSON.parse(localStorage.getItem('applications') || '[]');
+      existingApplications.push(fallbackData);
+      localStorage.setItem('applications', JSON.stringify(existingApplications));
+      
       toast({
-        title: 'Error',
-        description: 'Failed to submit application. Please try again or contact support.',
-        variant: 'destructive',
+        title: 'Application Saved Locally',
+        description: 'Application saved to local storage. Set up Airtable for permanent storage.',
+        variant: "destructive",
       });
+      
+      setApplicationSubmitted(true);
+      setCurrentStep(3);
     } finally {
       setIsProcessing(false);
     }
@@ -365,7 +405,7 @@ export const ApplicationForm = () => {
           {currentStep === 2 && extractedData && (
             <CompleteStep 
               extractedData={extractedData}
-              onSubmit={handleValidationComplete}
+              onSubmit={handleSubmit}
               onPrevious={goToPreviousStep}
               isProcessing={isProcessing}
               applicationInfo={applicationInfo}
