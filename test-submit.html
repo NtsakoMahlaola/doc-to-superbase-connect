@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Application</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .success { color: green; }
+        .error { color: red; }
+        #response { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Test Application Submission</h1>
+    <button onclick="submitTestApplication()">Submit Test Application</button>
+    <p>After submitting, check the admin page: <a href="http://localhost:8080/admin" target="_blank">Admin Panel</a></p>
+    
+    <div id="response"></div>
+    
+    <script>
+        function logResponse(message, isError = false) {
+            const responseDiv = document.getElementById('response');
+            const pre = document.createElement('pre');
+            pre.className = isError ? 'error' : 'success';
+            pre.textContent = typeof message === 'string' ? message : JSON.stringify(message, null, 2);
+            responseDiv.prepend(pre);
+            console.log(isError ? 'Error:' : 'Success:', message);
+        }
+
+        async function submitTestApplication() {
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = '<p>Submitting application...</p>';
+            
+            const formData = new FormData();
+            formData.append('name', 'Test Applicant');
+            formData.append('email', 'test@example.com');
+            formData.append('studentNumber', '12345678');
+            formData.append('phone', '0123456789');
+            formData.append('position_applied_for', 'Test Position');
+            formData.append('leadership', JSON.stringify(['Test Leader']));
+            formData.append('education', JSON.stringify(['Test University']));
+            formData.append('why_interested', 'Testing the application');
+            
+            // Create a test file
+            const file = new File(['Test file content'], 'test.txt', { type: 'text/plain' });
+            formData.append('file', file);
+
+            try {
+                console.log('Sending request to server...');
+                const response = await fetch('http://localhost:8080/api/submit-application', {
+                    method: 'POST',
+                    body: formData,
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || 'Unknown error occurred');
+                }
+                
+                logResponse({
+                    success: true,
+                    applicationId: result.applicationId,
+                    message: 'Application submitted successfully!'
+                });
+                
+            } catch (error) {
+                console.error('Error:', error);
+                logResponse({
+                    error: 'Failed to submit application',
+                    details: error.message,
+                    stack: error.stack
+                }, true);
+            }
+        }
+    </script>
+</body>
+</html>
