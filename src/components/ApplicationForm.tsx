@@ -7,8 +7,8 @@ import { ValidateStep } from './ValidateStep';
 import { CompleteStep } from './CompleteStep';
 import { SuccessStep } from './SuccessStep';
 import { LeadershipStructureStep } from './LeadershipStructureStep';
-import respublicaLogo from '/Respublica-logo.jpg';
-import uctLogo from '/uct logo.jpg';
+import respublicaLogo from '@/assets/respublica-logo.png';
+import uctLogo from '@/assets/uct-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
 
