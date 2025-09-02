@@ -18,7 +18,7 @@ export const SuccessStep = () => {
         
         <p className="text-lg text-muted-foreground mb-8">
           Thank you for your interest in the Roscommon Sub-Warden position. We've received your application and will review it carefully. 
-          Onlly shortlisted candidates will be contacted.
+          Only shortlisted candidates will be contacted.
         </p>
         
         {/* What Happens Next */}
