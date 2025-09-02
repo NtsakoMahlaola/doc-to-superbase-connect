@@ -25,6 +25,8 @@ interface LeadershipStructureStepProps {
   onComplete: (data: {
     name: string;
     surname: string;
+    email: string;
+    phone: string;
     studentNumber: string;
     leadershipRoles: string[];
     otherRole?: string;
@@ -35,6 +37,8 @@ export const LeadershipStructureStep = ({ onComplete }: LeadershipStructureStepP
   const [formData, setFormData] = useState({
     name: '',
     surname: '',
+    email: '',
+    phone: '',
     studentNumber: '',
     leadershipRoles: [] as string[],
     otherRole: ''
@@ -60,6 +64,8 @@ export const LeadershipStructureStep = ({ onComplete }: LeadershipStructureStepP
     onComplete({
       name: formData.name,
       surname: formData.surname,
+      email: formData.email,
+      phone: formData.phone,
       studentNumber: formData.studentNumber,
       leadershipRoles: formData.leadershipRoles,
       ...(formData.otherRole && { otherRole: formData.otherRole })
@@ -102,6 +108,28 @@ export const LeadershipStructureStep = ({ onComplete }: LeadershipStructureStepP
                     onChange={(e) => setFormData(prev => ({ ...prev, surname: e.target.value }))}
                     required
                     placeholder="Enter your surname"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="email">Email Address *</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                    required
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="phone">Phone Number *</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                    required
+                    placeholder="+27 12 345 6789"
                   />
                 </div>
                 <div>
@@ -166,7 +194,7 @@ export const LeadershipStructureStep = ({ onComplete }: LeadershipStructureStepP
               className="bg-gradient-button hover:opacity-90 transition-opacity"
               size="lg"
               onClick={handleSubmit}
-              disabled={!formData.name || !formData.surname || !formData.studentNumber}
+              disabled={!formData.name || !formData.surname || !formData.email || !formData.phone || !formData.studentNumber}
             >
               Continue to Document Upload
             </Button>
