@@ -73,6 +73,7 @@ export const UploadStep = ({ onFileUpload, onPrevious, isProcessing }: UploadSte
           <li>Your CV</li>
           <li>Motivational letter</li>
           <li>Latest academic transcript</li>
+          <li>Names and contact details of two referees</li>
           <li>Reference letter from a person who can attest to your student leadership role</li>
         </ul>
       </div>
