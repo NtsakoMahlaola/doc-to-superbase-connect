@@ -7,8 +7,6 @@ import { ValidateStep } from './ValidateStep';
 import { CompleteStep } from './CompleteStep';
 import { SuccessStep } from './SuccessStep';
 import { LeadershipStructureStep } from './LeadershipStructureStep';
-import respublicaLogo from '@/assets/respublica-logo.png';
-import uctLogo from '@/assets/uct-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
 
@@ -341,14 +339,14 @@ export const ApplicationForm = () => {
           <div className="flex items-center justify-center gap-12 mb-8 px-4">
             <div className="bg-white p-3 rounded-lg shadow-sm">
               <img 
-                src={respublicaLogo} 
+                src="/Respublica-logo.jpg" 
                 alt="Respublica Student Living" 
                 className="h-14 object-contain"
               />
             </div>
             <div className="bg-white p-2 rounded-lg shadow-sm">
               <img 
-                src={uctLogo} 
+                src="/uct logo.jpg" 
                 alt="University of Cape Town" 
                 className="h-16 object-contain"
               />
