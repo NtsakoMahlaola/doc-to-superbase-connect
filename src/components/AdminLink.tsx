@@ -7,7 +7,7 @@ export const AdminLink = () => {
 
   const handleClick = () => {
     const password = prompt("Enter admin password:");
-    if (password === "secret123") {
+    if (password === "rchAdmin@2026") {
       navigate("/admin");
     } else {
       alert("Incorrect password!");
